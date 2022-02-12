@@ -16,17 +16,16 @@ public class CadastroDeProdutos {
 
     public static void main(String[] args) {
         Categoria computadores = new Categoria("Computador");
-        Produto computador = new Produto("Notebook Debian", "Notebbok Debian", new BigDecimal("1500.99"), computadores, Pagamento.PIX);
         EntityManager em = JPAUtil.getEntityManager();
-        ProdutoDao produtoDao = new ProdutoDao(em);
-        CategoriaDao categoriaDao = new CategoriaDao(em);
 
         em.getTransaction().begin();
-        categoriaDao.cadastrar(computadores);
-        produtoDao.cadastrar(computador);
+        em.persist(computadores);
+        computadores.setNome("computador1");
+
         em.getTransaction().commit();
         em.close();
 
+        computadores.setNome("computador2");
     }
 
 }
