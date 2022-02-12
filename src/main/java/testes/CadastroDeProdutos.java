@@ -22,10 +22,12 @@ public class CadastroDeProdutos {
         em.persist(computadores);
         computadores.setNome("computador1");
 
-        em.getTransaction().commit();
-        em.close();
+        em.flush();
+        em.clear();
 
+        computadores = em.merge(computadores);
         computadores.setNome("computador2");
+        em.flush();
     }
 
 }

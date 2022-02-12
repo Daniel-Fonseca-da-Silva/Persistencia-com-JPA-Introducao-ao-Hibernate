@@ -22,6 +22,8 @@ public class Produto {
     @Enumerated(EnumType.STRING)
     private Pagamento pagamento;
 
+    public Produto() {}
+
     public Produto(String nome, String descricao, BigDecimal preco, Categoria categoria, Pagamento pagamento) {
         this.nome = nome;
         this.descricao = descricao;
