@@ -8,30 +8,39 @@ import modelo.Produto;
 import util.JPAUtil;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class CadastroDeProdutos {
 
     public static void main(String[] args) {
-        Categoria computadores = new Categoria("Computador");
+
+        cadastrarProduto();
         EntityManager em = JPAUtil.getEntityManager();
+        ProdutoDao produtoDao = new ProdutoDao(em);
+
+        Produto p = produtoDao.buscarPorId(1L);
+        System.out.println(p.getPreco());
+
+        List<Produto> todos = produtoDao.buscarTodos();
+        todos.forEach(p2 -> System.out.println(p.getNome()));
+    }
+
+    private static void cadastrarProduto() {
+        Categoria computadores = new Categoria("COMPUTADORES");
+        Produto celular = new Produto("Computador com Fedora", "Novo computador legal", new BigDecimal("1500"), computadores, Pagamento.PIX );
+
+        EntityManager em = JPAUtil.getEntityManager();
+        ProdutoDao produtoDao = new ProdutoDao(em);
+        CategoriaDao categoriaDao = new CategoriaDao(em);
 
         em.getTransaction().begin();
-        em.persist(computadores);
-        computadores.setNome("computador1");
 
-        em.flush();
-        em.clear();
+        categoriaDao.cadastrar(computadores);
+        produtoDao.cadastrar(celular);
 
-        computadores = em.merge(computadores);
-        computadores.setNome("computador2");
-        em.flush();
-        em.clear();
-        em.remove(computadores);
-        em.flush();
-
+        em.getTransaction().commit();
+        em.close();
     }
 
 }
