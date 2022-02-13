@@ -24,6 +24,9 @@ public class CadastroDeProdutos {
 
         List<Produto> todos = produtoDao.buscarNomeCategoria("COMPUTADORES");
         todos.forEach(p2 -> System.out.println(p.getNome()));
+
+        BigDecimal precoDoProduto = produtoDao.buscarPrecoProdutoComNome("Computador com Fedora");
+        System.out.println("Preço do produto: "  + precoDoProduto);
     }
 
     private static void cadastrarProduto() {
