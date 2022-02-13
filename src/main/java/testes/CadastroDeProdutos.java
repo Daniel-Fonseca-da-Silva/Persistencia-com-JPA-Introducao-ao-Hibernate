@@ -28,6 +28,10 @@ public class CadastroDeProdutos {
         computadores = em.merge(computadores);
         computadores.setNome("computador2");
         em.flush();
+        em.clear();
+        em.remove(computadores);
+        em.flush();
+
     }
 
 }
